@@ -1,0 +1,48 @@
+EXPLAIN ANALYZE of Materialized view queries.
+EXPLAIN ANALYZE SELECT * FROM mv_property_summary WHERE property_id = 1;
+
+ Index Scan using idx_mv_property_summary_id on mv_property_summary (cost=0.28..8.29 rows=1 width=33) 
+ (actual time=0.040..0.042 rows=1.00 loops=1)
+ Index Cond: (property_id = 1)
+ Index Searches: 1
+ Buffers: shared hit=3
+ Planning:
+ Buffers: shared hit=61
+ Planning Time: 1.473 ms
+ Execution Time: 0.739 ms
+
+ --------------------------------------------------------------------------------------------------------
+
+ EXPLAIN ANALYZE of Workflow 2;
+
+  Sort  (cost=20584.06..20709.06 rows=50001 width=108) (actual time=53.155..53.176 rows=366.00 loops=1)
+   Sort Key: movingaverages.booking_date DESC
+   Sort Method: quicksort  Memory: 47kB
+   Buffers: shared hit=423
+   ->  WindowAgg  (cost=12773.06..13773.06 rows=50001 width=108) (actual time=52.427..52.685 rows=366.00 loops=1)
+         Window: w1 AS (ORDER BY movingaverages.moving_avg_7d ROWS UNBOUNDED PRECEDING)
+         Storage: Memory  Maximum Storage: 17kB
+         Buffers: shared hit=420
+         ->  Sort  (cost=12773.04..12898.04 rows=50001 width=68) (actual time=52.418..52.439 rows=366.00 loops=1)
+               Sort Key: movingaverages.moving_avg_7d DESC
+               Sort Method: quicksort  Memory: 42kB
+               Buffers: shared hit=420
+               ->  Subquery Scan on movingaverages  (cost=4944.55..6819.55 rows=50001 width=68) (actual time=40.379..52.089 rows=366.00 loops=1)
+                     Buffers: shared hit=417
+                     ->  WindowAgg  (cost=4944.55..6819.55 rows=50001 width=68) (actual time=40.377..52.041 rows=366.00 loops=1)
+                           Window: w1 AS (ORDER BY (date(bookings.created_at)) ROWS BETWEEN '6'::bigint PRECEDING AND CURRENT ROW)
+                           Storage: Memory  Maximum Storage: 17kB
+                           Buffers: shared hit=417
+                           ->  GroupAggregate  (cost=4944.51..6069.53 rows=50001 width=36) (actual time=40.295..51.613 rows=366.00 loops=1)
+                                 Group Key: (date(bookings.created_at))
+                                 Buffers: shared hit=417
+                                 ->  Sort  (cost=4944.51..5069.51 rows=50001 width=10) (actual time=37.315..41.476 rows=50002.00 loops=1)
+                                       Sort Key: (date(bookings.created_at))
+                                       Sort Method: quicksort  Memory: 3099kB
+                                       Buffers: shared hit=417
+                                       ->  Seq Scan on bookings  (cost=0.00..1042.01 rows=50001 width=10) (actual time=0.037..23.443 rows=50002.00 loops=1)
+                                             Buffers: shared hit=417
+ Planning:
+ Buffers: shared hit=124
+ Planning Time: 5.413 ms
+ Execution Time: 54.145 ms
