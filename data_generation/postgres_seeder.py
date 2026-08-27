@@ -63,6 +63,8 @@ def generate_and_insert_audit_logs(cursor, guest_ids, num_logs):
         guest_id = random.choice(guest_ids)
         amount_changed = round(random.uniform(10.0, 500.0), 2)
         action_type = random.choice(['CREDIT', 'DEBIT'])
+        if action_type == 'DEBIT':
+            amount_changed = -amount_changed
         balance_after = round(random.uniform(50.0, 5000.0), 2)
         
         random_days_ago = random.randint(0, 365)
