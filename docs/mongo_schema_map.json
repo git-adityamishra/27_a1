@@ -1,33 +1,36 @@
 {
   "PropertyAmenities": {
-    "property_id": "UUID (Matches Postgres Property ID)",
+    "_id": "MongoDB ObjectId",
+    "property_id": "Integer (MUST exactly match an integer property_id in Postgres)",
     "house_rules": [
-      "No smoking",
-      "No pets",
-      "Quiet hours 10PM-8AM"
+      "Array of Strings (e.g., 'No smoking', 'No pets')"
     ],
     "accessibility_features": [
-      "Wheelchair ramp",
-      "Elevator",
-      "Roll-in shower"
+      "Array of Strings (e.g., 'Elevator', 'Step-free access')"
     ]
   },
   "PropertyReviews": {
-    "review_id": "UUID",
-    "property_id": "UUID (Matches Postgres Property ID)",
-    "guest_id": "UUID (Matches Postgres Guest ID)",
-    "rating": 4.5,
-    "review_text": "Great stay, very clean!",
-    "location_tags": ["Beachfront", "Downtown"],
-    "timestamp": "2023-10-27T10:00:00Z"
+    "_id": "MongoDB ObjectId",
+    "property_id": "Integer (MUST exactly match an integer property_id in Postgres)",
+    "guest_id": "Integer (MUST exactly match an integer guest_id in Postgres)",
+    "rating": "Double (Number from 1.0 to 5.0)",
+    "review_text": "String (A long paragraph of text)",
+    "location_tags": [
+      "Array of Strings (e.g., 'Beachfront', 'Downtown')"
+    ],
+    "timestamp": "ISODate (Time the review was written)"
   },
   "SearchSessions": {
-    "session_id": "UUID",
-    "user_device": "Mobile App",
+    "_id": "MongoDB ObjectId",
+    "session_id": "String (UUID - this one can stay a UUID because it is unique to Mongo)",
+    "user_device": "String (e.g., 'Mobile', 'Desktop')",
     "location": {
-      "type": "Point",
-      "coordinates": [-118.2437, 34.0522] 
+      "type": "String (Must strictly be the word 'Point')",
+      "coordinates": [
+        "Array of Doubles: [Longitude, Latitude] - MUST be in this specific order for MongoDB 2dsphere!"
+      ]
     },
-    "created_at": "2023-10-27T10:05:00Z"
+    "created_at": "ISODate (Used by the TTL index to auto-delete after 2 hours)"
   }
 }
+
