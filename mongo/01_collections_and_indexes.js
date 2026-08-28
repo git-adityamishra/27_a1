@@ -1,5 +1,5 @@
 // 1. Connect to the correct database 
-// use stayspot;
+db = db.getSiblingDB('stayspot');
 
 // 2. Create the Geospatial Index
 // This tells MongoDB to treat the "location" field as spherical map coordinates.
