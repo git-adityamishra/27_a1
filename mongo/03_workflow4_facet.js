@@ -1,5 +1,5 @@
 // Connect to the StaySpot database
-// use stayspot;
+db = db.getSiblingDB('stayspot');
 
 // We use the aggregate() function to create our data assembly line
 var pipeline = [
