@@ -1,7 +1,7 @@
 # StaySpot: Vacation Rental Database Architecture
 
 **Repository:** https://github.com/git-adityamishra/27_a1
-**Final Commit Hash:** `71e097d65886ff00375a486ce1a939472b166a18`
+**Final Commit Hash:** `1db75888f1eab9f892f7f34b04b17f93915834b4`
 
 This repository contains the backend database engineering for **StaySpot**, a high-performance vacation rental platform. The architecture utilizes a hybrid database approach, combining the strict ACID compliance of PostgreSQL for financial ledgers with the flexible, geospatial capabilities of MongoDB for user search clustering and reviews.
 
