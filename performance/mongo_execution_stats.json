@@ -1,0 +1,653 @@
+[
+  {
+    "workflow_3_geoNear_stats": {
+      "explainVersion": "1",
+      "stages": [
+        {
+          "$geoNearCursor": {
+            "queryPlanner": {
+              "namespace": "stayspot.SearchSessions",
+              "parsedQuery": {
+                "location": {
+                  "$nearSphere": {
+                    "type": "Point",
+                    "coordinates": [
+                      77.3231,
+                      28.5703
+                    ]
+                  },
+                  "$maxDistance": 5000
+                }
+              },
+              "indexFilterSet": false,
+              "queryHash": "F1E00857",
+              "planCacheShapeHash": "F1E00857",
+              "planCacheKey": "3BBD05AB",
+              "optimizationTimeMillis": 0,
+              "cursorType": "regular",
+              "maxIndexedOrSolutionsReached": false,
+              "maxIndexedAndSolutionsReached": false,
+              "maxScansToExplodeReached": false,
+              "prunedSimilarIndexes": false,
+              "winningPlan": {
+                "isCached": false,
+                "stage": "GEO_NEAR_2DSPHERE",
+                "nss": "stayspot.SearchSessions",
+                "keyPattern": {
+                  "location": "2dsphere"
+                },
+                "indexName": "location_2dsphere",
+                "indexVersion": 2,
+                "inputStage": {
+                  "stage": "FETCH",
+                  "inputStage": {
+                    "stage": "IXSCAN",
+                    "keyPattern": {
+                      "location": "2dsphere"
+                    },
+                    "indexName": "location_2dsphere",
+                    "isMultiKey": false,
+                    "multiKeyPaths": {
+                      "location": []
+                    },
+                    "isUnique": false,
+                    "isSparse": false,
+                    "isPartial": false,
+                    "indexVersion": 2,
+                    "direction": "forward",
+                    "indexBounds": {
+                      "location": [
+                        "[4107282860161892352, 4107282860161892352]",
+                        "[4110660559882420224, 4110660559882420224]",
+                        "[4110871666114953216, 4110871666114953216]",
+                        "[4110910149021925376, 4110910149021925376]",
+                        "[4110910423899832320, 4110910423899832320]",
+                        "[4110910561338785793, 4110910698777739263]",
+                        "[4110910698777739265, 4110910836216692735]",
+                        "[4110910973655646208, 4110910973655646208]",
+                        "[4110911111094599681, 4110911248533553151]",
+                        "[4110911248533553152, 4110911248533553152]",
+                        "[4110911248533553153, 4110911798289367039]",
+                        "[4110911798289367041, 4110911935728320511]",
+                        "[4110911935728320513, 4110912073167273983]",
+                        "[4110912073167273984, 4110912073167273984]",
+                        "[4110912073167273985, 4110912107527012351]",
+                        "[4110912141886750720, 4110912141886750720]",
+                        "[4110912176246489089, 4110912210606227455]",
+                        "[4110912210606227457, 4110912348045180927]",
+                        "[4110912348045180928, 4110912348045180928]",
+                        "[4110912348045180929, 4110912485484134399]",
+                        "[4110912485484134401, 4110912519843872767]",
+                        "[4110912554203611136, 4110912554203611136]",
+                        "[4110912622923087872, 4110912622923087872]",
+                        "[4110912760362041345, 4110912897800994815]",
+                        "[4110912897800994817, 4110913447556808703]",
+                        "[4110913481916547073, 4110913516276285439]",
+                        "[4110913516276285440, 4110913516276285440]",
+                        "[4110913722434715648, 4110913722434715648]",
+                        "[4110913859873669121, 4110913997312622591]",
+                        "[4110913997312622593, 4110914134751576063]",
+                        "[4110914134751576065, 4110914272190529535]",
+                        "[4110914272190529536, 4110914272190529536]",
+                        "[4110914547068436480, 4110914547068436480]",
+                        "[4110924442673086464, 4110924442673086464]",
+                        "[4110942034859130880, 4110942034859130880]",
+                        "[4111786459789262848, 4111786459789262848]",
+                        "[4125297258671374336, 4125297258671374336]"
+                      ]
+                    }
+                  }
+                }
+              },
+              "rejectedPlans": []
+            },
+            "executionStats": {
+              "executionSuccess": true,
+              "nReturned": 0,
+              "executionTimeMillis": 1,
+              "totalKeysExamined": 6,
+              "totalDocsExamined": 0,
+              "executionStages": {
+                "isCached": false,
+                "stage": "GEO_NEAR_2DSPHERE",
+                "nReturned": 0,
+                "executionTimeMillisEstimate": 0,
+                "works": 23,
+                "advanced": 0,
+                "needTime": 22,
+                "needYield": 0,
+                "saveState": 2,
+                "restoreState": 1,
+                "isEOF": 1,
+                "nss": "stayspot.SearchSessions",
+                "keyPattern": {
+                  "location": "2dsphere"
+                },
+                "indexName": "location_2dsphere",
+                "indexVersion": 2,
+                "searchIntervals": [
+                  {
+                    "minDistance": 0,
+                    "maxDistance": 5000,
+                    "maxInclusive": true,
+                    "nBuffered": 0,
+                    "nReturned": 0
+                  }
+                ],
+                "usedDisk": false,
+                "spills": 0,
+                "spilledRecords": 0,
+                "spilledBytes": 0,
+                "spilledDataStorageSize": 0,
+                "inputStage": {
+                  "stage": "FETCH",
+                  "nReturned": 0,
+                  "executionTimeMillisEstimate": 0,
+                  "works": 6,
+                  "advanced": 0,
+                  "needTime": 5,
+                  "needYield": 0,
+                  "saveState": 1,
+                  "restoreState": 0,
+                  "isEOF": 1,
+                  "docsExamined": 0,
+                  "alreadyHasObj": 0,
+                  "inputStage": {
+                    "stage": "IXSCAN",
+                    "nReturned": 0,
+                    "executionTimeMillisEstimate": 0,
+                    "works": 6,
+                    "advanced": 0,
+                    "needTime": 5,
+                    "needYield": 0,
+                    "saveState": 1,
+                    "restoreState": 0,
+                    "isEOF": 1,
+                    "keyPattern": {
+                      "location": "2dsphere"
+                    },
+                    "indexName": "location_2dsphere",
+                    "isMultiKey": false,
+                    "multiKeyPaths": {
+                      "location": []
+                    },
+                    "isUnique": false,
+                    "isSparse": false,
+                    "isPartial": false,
+                    "indexVersion": 2,
+                    "direction": "forward",
+                    "indexBounds": {
+                      "location": [
+                        "[4107282860161892352, 4107282860161892352]",
+                        "[4110660559882420224, 4110660559882420224]",
+                        "[4110871666114953216, 4110871666114953216]",
+                        "[4110910149021925376, 4110910149021925376]",
+                        "[4110910423899832320, 4110910423899832320]",
+                        "[4110910561338785793, 4110910698777739263]",
+                        "[4110910698777739265, 4110910836216692735]",
+                        "[4110910973655646208, 4110910973655646208]",
+                        "[4110911111094599681, 4110911248533553151]",
+                        "[4110911248533553152, 4110911248533553152]",
+                        "[4110911248533553153, 4110911798289367039]",
+                        "[4110911798289367041, 4110911935728320511]",
+                        "[4110911935728320513, 4110912073167273983]",
+                        "[4110912073167273984, 4110912073167273984]",
+                        "[4110912073167273985, 4110912107527012351]",
+                        "[4110912141886750720, 4110912141886750720]",
+                        "[4110912176246489089, 4110912210606227455]",
+                        "[4110912210606227457, 4110912348045180927]",
+                        "[4110912348045180928, 4110912348045180928]",
+                        "[4110912348045180929, 4110912485484134399]",
+                        "[4110912485484134401, 4110912519843872767]",
+                        "[4110912554203611136, 4110912554203611136]",
+                        "[4110912622923087872, 4110912622923087872]",
+                        "[4110912760362041345, 4110912897800994815]",
+                        "[4110912897800994817, 4110913447556808703]",
+                        "[4110913481916547073, 4110913516276285439]",
+                        "[4110913516276285440, 4110913516276285440]",
+                        "[4110913722434715648, 4110913722434715648]",
+                        "[4110913859873669121, 4110913997312622591]",
+                        "[4110913997312622593, 4110914134751576063]",
+                        "[4110914134751576065, 4110914272190529535]",
+                        "[4110914272190529536, 4110914272190529536]",
+                        "[4110914547068436480, 4110914547068436480]",
+                        "[4110924442673086464, 4110924442673086464]",
+                        "[4110942034859130880, 4110942034859130880]",
+                        "[4111786459789262848, 4111786459789262848]",
+                        "[4125297258671374336, 4125297258671374336]"
+                      ]
+                    },
+                    "keysExamined": 6,
+                    "seeks": 6,
+                    "dupsTested": 0,
+                    "dupsDropped": 0,
+                    "peakTrackedMemBytes": 0
+                  }
+                }
+              }
+            }
+          },
+          "nReturned": 0,
+          "executionTimeMillisEstimate": 1
+        },
+        {
+          "$project": {
+            "location": true,
+            "created_at": true,
+            "distance_meters": {
+              "$round": [
+                "$distance_meters",
+                {
+                  "$const": 2
+                }
+              ]
+            },
+            "_id": false
+          },
+          "nReturned": 0,
+          "executionTimeMillisEstimate": 1
+        },
+        {
+          "$sort": {
+            "sortKey": {
+              "distance_meters": 1
+            },
+            "limit": 100
+          },
+          "totalDataSizeSortedBytesEstimate": 0,
+          "usedDisk": false,
+          "spills": 0,
+          "spilledBytes": 0,
+          "spilledRecords": 0,
+          "spilledDataStorageSize": 0,
+          "nReturned": 0,
+          "executionTimeMillisEstimate": 1,
+          "peakTrackedMemBytes": 0
+        }
+      ],
+      "queryShapeHash": "CE5AE6D68E66B31B47A8A0A54FF15581078C76818844799990E7248DE6AB0D38",
+      "serverInfo": {
+        "host": "Anujs-MacBook-Air.local",
+        "port": 27017,
+        "version": "8.3.7",
+        "gitVersion": "34eee04f34989abb7a3d91447976f033f4f74af2"
+      },
+      "serverParameters": {
+        "internalQueryFacetBufferSizeBytes": 104857600,
+        "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+        "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+        "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+        "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+        "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+        "internalQueryProhibitBlockingMergeOnMongoS": 0,
+        "internalQueryMaxAddToSetBytes": 104857600,
+        "internalQueryFrameworkControl": "trySbeRestricted",
+        "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+      },
+      "command": {
+        "aggregate": "SearchSessions",
+        "pipeline": [
+          {
+            "$geoNear": {
+              "near": {
+                "type": "Point",
+                "coordinates": [
+                  77.3231,
+                  28.5703
+                ]
+              },
+              "distanceField": "distance_meters",
+              "maxDistance": 5000,
+              "spherical": true
+            }
+          },
+          {
+            "$project": {
+              "_id": 0,
+              "location": 1,
+              "distance_meters": {
+                "$round": [
+                  "$distance_meters",
+                  2
+                ]
+              },
+              "created_at": 1
+            }
+          },
+          {
+            "$sort": {
+              "distance_meters": 1
+            }
+          },
+          {
+            "$limit": 100
+          }
+        ],
+        "cursor": {},
+        "$db": "stayspot"
+      },
+      "ok": 1
+    }
+  },
+  {
+    "workflow_4_facet_stats": {
+      "explainVersion": "1",
+      "stages": [
+        {
+          "$cursor": {
+            "queryPlanner": {
+              "namespace": "stayspot.PropertyReviews",
+              "parsedQuery": {},
+              "indexFilterSet": false,
+              "queryHash": "C0BD3948",
+              "planCacheShapeHash": "C0BD3948",
+              "planCacheKey": "BCA05D32",
+              "optimizationTimeMillis": 0,
+              "cursorType": "regular",
+              "maxIndexedOrSolutionsReached": false,
+              "maxIndexedAndSolutionsReached": false,
+              "maxScansToExplodeReached": false,
+              "prunedSimilarIndexes": false,
+              "winningPlan": {
+                "isCached": false,
+                "stage": "PROJECTION_SIMPLE",
+                "transformBy": {
+                  "location_tags": 1,
+                  "rating": 1,
+                  "_id": 0
+                },
+                "inputStage": {
+                  "stage": "COLLSCAN",
+                  "nss": "stayspot.PropertyReviews",
+                  "direction": "forward"
+                }
+              },
+              "rejectedPlans": []
+            },
+            "executionStats": {
+              "executionSuccess": true,
+              "nReturned": 50000,
+              "executionTimeMillis": 659,
+              "totalKeysExamined": 0,
+              "totalDocsExamined": 50000,
+              "executionStages": {
+                "isCached": false,
+                "stage": "PROJECTION_SIMPLE",
+                "nReturned": 50000,
+                "executionTimeMillisEstimate": 81,
+                "works": 50001,
+                "advanced": 50000,
+                "needTime": 0,
+                "needYield": 0,
+                "saveState": 17,
+                "restoreState": 16,
+                "isEOF": 1,
+                "transformBy": {
+                  "location_tags": 1,
+                  "rating": 1,
+                  "_id": 0
+                },
+                "inputStage": {
+                  "stage": "COLLSCAN",
+                  "nReturned": 50000,
+                  "executionTimeMillisEstimate": 74,
+                  "works": 50001,
+                  "advanced": 50000,
+                  "needTime": 0,
+                  "needYield": 0,
+                  "saveState": 17,
+                  "restoreState": 16,
+                  "isEOF": 1,
+                  "nss": "stayspot.PropertyReviews",
+                  "direction": "forward",
+                  "docsExamined": 50000
+                }
+              }
+            }
+          },
+          "nReturned": 50000,
+          "executionTimeMillisEstimate": 192
+        },
+        {
+          "$facet": {
+            "ratingDistributions": [
+              {
+                "$internalFacetTeeConsumer": {},
+                "nReturned": 50000,
+                "executionTimeMillisEstimate": 192
+              },
+              {
+                "$group": {
+                  "_id": "$rating",
+                  "count": {
+                    "$sum": {
+                      "$const": 1
+                    }
+                  },
+                  "$willBeMerged": false
+                },
+                "nReturned": 41,
+                "executionTimeMillisEstimate": 242,
+                "maxAccumulatorMemoryUsageBytes": {
+                  "count": 9184
+                },
+                "totalOutputDataSizeBytes": 9717,
+                "usedDisk": false,
+                "spills": 0,
+                "spilledDataStorageSize": 0,
+                "spilledBytes": 0,
+                "spilledRecords": 0,
+                "peakTrackedMemBytes": 9840
+              },
+              {
+                "$sort": {
+                  "sortKey": {
+                    "_id": -1
+                  }
+                },
+                "totalDataSizeSortedBytesEstimate": 10045,
+                "usedDisk": false,
+                "spills": 0,
+                "spilledBytes": 0,
+                "spilledRecords": 0,
+                "spilledDataStorageSize": 0,
+                "nReturned": 41,
+                "executionTimeMillisEstimate": 242,
+                "peakTrackedMemBytes": 10045
+              }
+            ],
+            "frequentTags": [
+              {
+                "$internalFacetTeeConsumer": {},
+                "nReturned": 50000,
+                "executionTimeMillisEstimate": 0
+              },
+              {
+                "$unwind": {
+                  "path": "$location_tags"
+                },
+                "nReturned": 100132,
+                "executionTimeMillisEstimate": 123
+              },
+              {
+                "$group": {
+                  "_id": "$location_tags",
+                  "count": {
+                    "$sum": {
+                      "$const": 1
+                    }
+                  },
+                  "$willBeMerged": false
+                },
+                "nReturned": 5,
+                "executionTimeMillisEstimate": 250,
+                "maxAccumulatorMemoryUsageBytes": {
+                  "count": 1120
+                },
+                "totalOutputDataSizeBytes": 1227,
+                "usedDisk": false,
+                "spills": 0,
+                "spilledDataStorageSize": 0,
+                "spilledBytes": 0,
+                "spilledRecords": 0,
+                "peakTrackedMemBytes": 1242
+              },
+              {
+                "$sort": {
+                  "sortKey": {
+                    "count": -1
+                  },
+                  "limit": 10
+                },
+                "totalDataSizeSortedBytesEstimate": 1267,
+                "usedDisk": false,
+                "spills": 0,
+                "spilledBytes": 0,
+                "spilledRecords": 0,
+                "spilledDataStorageSize": 0,
+                "nReturned": 5,
+                "executionTimeMillisEstimate": 250,
+                "peakTrackedMemBytes": 1267
+              }
+            ],
+            "overallAverage": [
+              {
+                "$internalFacetTeeConsumer": {},
+                "nReturned": 50000,
+                "executionTimeMillisEstimate": 109
+              },
+              {
+                "$group": {
+                  "_id": {
+                    "$const": null
+                  },
+                  "averageRating": {
+                    "$avg": "$rating"
+                  },
+                  "$willBeMerged": false
+                },
+                "nReturned": 1,
+                "executionTimeMillisEstimate": 159,
+                "maxAccumulatorMemoryUsageBytes": {
+                  "averageRating": 192
+                },
+                "totalOutputDataSizeBytes": 237,
+                "usedDisk": false,
+                "spills": 0,
+                "spilledDataStorageSize": 0,
+                "spilledBytes": 0,
+                "spilledRecords": 0,
+                "peakTrackedMemBytes": 208
+              },
+              {
+                "$project": {
+                  "averageRating": {
+                    "$round": [
+                      "$averageRating",
+                      {
+                        "$const": 2
+                      }
+                    ]
+                  },
+                  "_id": false
+                },
+                "nReturned": 1,
+                "executionTimeMillisEstimate": 159
+              }
+            ]
+          },
+          "nReturned": 1,
+          "executionTimeMillisEstimate": 651
+        }
+      ],
+      "queryShapeHash": "2974FF1A3A90EEBD049D2FE6B09E07AF074941644F7C3ABE0EA08A6035481DDE",
+      "serverInfo": {
+        "host": "Anujs-MacBook-Air.local",
+        "port": 27017,
+        "version": "8.3.7",
+        "gitVersion": "34eee04f34989abb7a3d91447976f033f4f74af2"
+      },
+      "serverParameters": {
+        "internalQueryFacetBufferSizeBytes": 104857600,
+        "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+        "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+        "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+        "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+        "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+        "internalQueryProhibitBlockingMergeOnMongoS": 0,
+        "internalQueryMaxAddToSetBytes": 104857600,
+        "internalQueryFrameworkControl": "trySbeRestricted",
+        "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+      },
+      "command": {
+        "aggregate": "PropertyReviews",
+        "pipeline": [
+          {
+            "$facet": {
+              "ratingDistributions": [
+                {
+                  "$group": {
+                    "_id": "$rating",
+                    "count": {
+                      "$sum": 1
+                    }
+                  }
+                },
+                {
+                  "$sort": {
+                    "_id": -1
+                  }
+                }
+              ],
+              "frequentTags": [
+                {
+                  "$unwind": "$location_tags"
+                },
+                {
+                  "$group": {
+                    "_id": "$location_tags",
+                    "count": {
+                      "$sum": 1
+                    }
+                  }
+                },
+                {
+                  "$sort": {
+                    "count": -1
+                  }
+                },
+                {
+                  "$limit": 10
+                }
+              ],
+              "overallAverage": [
+                {
+                  "$group": {
+                    "_id": null,
+                    "averageRating": {
+                      "$avg": "$rating"
+                    }
+                  }
+                },
+                {
+                  "$project": {
+                    "_id": 0,
+                    "averageRating": {
+                      "$round": [
+                        "$averageRating",
+                        2
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "cursor": {},
+        "$db": "stayspot"
+      },
+      "ok": 1
+    }
+  }
+]

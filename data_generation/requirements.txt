@@ -1,0 +1,8 @@
+pymongo
+faker
+# These are the Python libraries required for our project.
+# Run 'pip install -r requirements.txt' to install them.
+
+Faker==28.0.0
+psycopg2-binary==2.9.9
+pymongo==4.10.1

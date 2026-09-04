@@ -1,0 +1,83 @@
+EXPLAIN ANALYZE of Materialized view queries.
+EXPLAIN ANALYZE SELECT * FROM mv_property_summary WHERE property_id = 1;
+
+ Index Scan using idx_mv_property_summary_id on mv_property_summary (cost=0.28..8.29 rows=1 width=33) 
+ (actual time=0.040..0.042 rows=1.00 loops=1)
+ Index Cond: (property_id = 1)
+ Index Searches: 1
+ Buffers: shared hit=3
+ Planning:
+ Buffers: shared hit=61
+ Planning Time: 1.473 ms
+ Execution Time: 0.739 ms
+
+ --------------------------------------------------------------------------------------------------------
+
+  Incremental Sort  (cost=9574.41..265942.02 rows=400200 width=112) (actual time=80.315..1067.743 rows=732366.00 loops=1)
+   Sort Key: movingaverages.property_id, movingaverages.booking_date DESC
+   Presorted Key: movingaverages.property_id
+   Full-sort Groups: 2001  Sort Method: quicksort  Average Memory: 28kB  Peak Memory: 28kB
+   Pre-sorted Groups: 2001  Sort Method: quicksort  Average Memory: 44kB  Peak Memory: 44kB
+   Buffers: shared hit=1262
+   ->  WindowAgg  (cost=8311.29..238991.54 rows=400200 width=112) (actual time=79.420..960.839 rows=732366.00 loops=1)
+         Window: w1 AS (PARTITION BY movingaverages.property_id ORDER BY movingaverages.moving_avg_7d ROWS UNBOUNDED PRECEDING)
+         Storage: Memory  Maximum Storage: 17kB
+         Buffers: shared hit=1262
+         ->  Incremental Sort  (cost=8310.72..230987.54 rows=400200 width=72) (actual time=79.409..769.808 rows=732366.00 loops=1)
+               Sort Key: movingaverages.property_id, movingaverages.moving_avg_7d DESC
+               Presorted Key: movingaverages.property_id
+               Full-sort Groups: 2001  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+               Pre-sorted Groups: 2001  Sort Method: quicksort  Average Memory: 38kB  Peak Memory: 38kB
+               Buffers: shared hit=1262
+               ->  Subquery Scan on movingaverages  (cost=7216.90..204037.06 rows=400200 width=72) (actual time=78.912..649.594 rows=732366.00 loops=1)
+                     Buffers: shared hit=1259
+                     ->  WindowAgg  (cost=7216.90..204037.06 rows=400200 width=72) (actual time=78.911..617.217 rows=732366.00 loops=1)
+                           Window: w1 AS (PARTITION BY p.id ORDER BY (((generate_series(((InitPlan 1).col1)::timestamp with time zone, ((InitPlan 2).col1)::timestamp with time zone, '1 day'::interval)))::date) ROWS BETWEEN '6'::bigint PRECEDING AND CURRENT ROW)
+                           Storage: Memory  Maximum Storage: 17kB
+                           Buffers: shared hit=1259
+                           ->  GroupAggregate  (cost=7216.41..197033.56 rows=400200 width=40) (actual time=78.900..338.943 rows=732366.00 loops=1)
+                                 Group Key: p.id, (((generate_series(((InitPlan 1).col1)::timestamp with time zone, ((InitPlan 2).col1)::timestamp with time zone, '1 day'::interval)))::date)
+                                 Buffers: shared hit=1259
+                                 ->  Merge Left Join  (cost=7216.41..177023.56 rows=2001000 width=14) (actual time=78.876..235.567 rows=734027.00 loops=1)
+                                       Merge Cond: ((p.id = b.property_id) AND ((((generate_series(((InitPlan 1).col1)::timestamp with time zone, ((InitPlan 2).col1)::timestamp with time zone, '1 day'::interval)))::date) = (date(b.created_at))))
+                                       Buffers: shared hit=1259
+                                       ->  Incremental Sort  (cost=2396.70..152196.56 rows=2001000 width=8) (actual time=44.008..139.834 rows=732366.00 loops=1)
+                                             Sort Key: p.id, (((generate_series(((InitPlan 1).col1)::timestamp with time zone, ((InitPlan 2).col1)::timestamp with time zone, '1 day'::interval)))::date)
+                                             Presorted Key: p.id
+                                             Full-sort Groups: 2001  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+                                             Pre-sorted Groups: 2001  Sort Method: quicksort  Average Memory: 33kB  Peak Memory: 33kB
+                                             Buffers: shared hit=842
+                                             ->  Nested Loop  (cost=2334.33..27436.37 rows=2001000 width=8) (actual time=43.640..92.088 rows=732366.00 loops=1)
+                                                   Buffers: shared hit=842
+                                                   ->  Index Only Scan using properties_pkey on properties p  (cost=0.28..62.29 rows=2001 width=4) (actual time=0.023..0.294 rows=2001.00 loops=1)
+                                                         Heap Fetches: 0
+                                                         Index Searches: 1
+                                                         Buffers: shared hit=8
+                                                   ->  Materialize  (cost=2334.05..2364.07 rows=1000 width=4) (actual time=0.022..0.030 rows=366.00 loops=2001)
+                                                         Storage: Memory  Maximum Storage: 28kB
+                                                         Buffers: shared hit=834
+                                                         ->  Result  (cost=2334.05..2359.07 rows=1000 width=4) (actual time=43.601..43.767 rows=366.00 loops=1)
+                                                               Buffers: shared hit=834
+                                                               InitPlan 1
+                                                                 ->  Aggregate  (cost=1167.02..1167.03 rows=1 width=4) (actual time=26.890..26.891 rows=1.00 loops=1)
+                                                                       Buffers: shared hit=417
+                                                                       ->  Seq Scan on bookings  (cost=0.00..917.01 rows=50001 width=8) (actual time=0.028..10.223 rows=50002.00 loops=1)
+                                                                             Buffers: shared hit=417
+                                                               InitPlan 2
+                                                                 ->  Aggregate  (cost=1167.02..1167.03 rows=1 width=4) (actual time=16.277..16.277 rows=1.00 loops=1)
+                                                                       Buffers: shared hit=417
+                                                                       ->  Seq Scan on bookings bookings_1  (cost=0.00..917.01 rows=50001 width=8) (actual time=0.026..3.624 rows=50002.00 loops=1)
+                                                                             Buffers: shared hit=417
+                                                               ->  ProjectSet  (cost=0.00..5.02 rows=1000 width=8) (actual time=43.599..43.691 rows=366.00 loops=1)
+                                                                     Buffers: shared hit=834
+                                                                     ->  Result  (cost=0.00..0.01 rows=1 width=0) (actual time=0.001..0.001 rows=1.00 loops=1)
+                                       ->  Sort  (cost=4819.51..4944.51 rows=50001 width=18) (actual time=34.864..36.203 rows=50002.00 loops=1)
+                                             Sort Key: b.property_id, (date(b.created_at))
+                                             Sort Method: quicksort  Memory: 3710kB
+                                             Buffers: shared hit=417
+                                             ->  Seq Scan on bookings b  (cost=0.00..917.01 rows=50001 width=18) (actual time=0.007..12.479 rows=50002.00 loops=1)
+                                                   Buffers: shared hit=417
+ Planning:
+ Buffers: shared hit=177
+ Planning Time: 6.707 ms
+ Execution Time: 1090.849 ms
